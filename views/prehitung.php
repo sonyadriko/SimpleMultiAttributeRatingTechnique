@@ -69,7 +69,10 @@
                                     <th>Kamera Belakang</th>
                                     <th>Jaringan</th>
                                     <th>Baterai</th>
-                                    <th>Aksi</th>
+                                    <!-- <th>Aksi</th> -->
+                                    <th>
+                                        <input type="checkbox" id="select-all"> Aksi
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -224,6 +227,24 @@
     <script src="../assets/lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js"></script>
     <script src="../assets/js/ResizeSensor.js"></script>
     <script src="../assets/js/dashboard.js"></script>
+    <script>
+$(document).ready(function() {
+    // Select all checkboxes when #select-all is checked
+    $('#select-all').click(function() {
+        $('.action-checkbox').prop('checked', this.checked);
+    });
+
+    // Optional: Update select-all checkbox if individual checkbox is unchecked
+    $('.action-checkbox').change(function() {
+        if (!this.checked) {
+            $('#select-all').prop('checked', false);
+        } else if ($('.action-checkbox:checked').length === $('.action-checkbox').length) {
+            $('#select-all').prop('checked', true);
+        }
+    });
+});
+</script>
+
     <script>
     $(function() {
         'use strict';

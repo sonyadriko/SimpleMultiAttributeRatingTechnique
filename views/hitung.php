@@ -330,24 +330,29 @@ $get_data = mysqli_query($conn, "select * from handphone where id_handphone IN (
 
                     // Tampilkan tabel ranking
                     $rank = 1;
-                    foreach ($rankings as $rank_data) {
-                        $nilai_akhir_scaled = $rank_data['nilai_akhir'] * 100;
-                        echo "<tr>";
-                        echo "<td class='text-truncate'>$rank</td>";
-                        echo "<td class='text-truncate'>{$rank_data['nama']}</td>";
-                        echo "<td class='text-truncate'>" . round($rank_data['nilai_akhir'], 3) . "</td>";
-                        // echo "<td class='text-truncate'>" . round($nilai_akhir_scaled, 2) . "</td>";
-                        echo "</tr>";
+foreach ($rankings as $rank_data) {
+    $nilai_akhir_scaled = $rank_data['nilai_akhir'] * 100;
 
-                        $item = [
-                            'nama' => $rank_data['nama'],
-                            'nilai_akhir' => $nilai_akhir_scaled,
-                            'ranking' => $rank,
-                        ];
+    // Warna baris: #1 warna emas, sisanya selang-seling abu dan putih
+    $row_class = ($rank == 1) ? 'table-warning' : (($rank % 2 == 0) ? 'table-secondary' : 'table-light');
 
-                        $alternatif_nilai_akhir_encoded[] = $item;
-                        $rank++;
-                    }
+    echo "<tr class='$row_class'>";
+    echo "<td class='text-truncate font-weight-bold'>$rank</td>"; // Kolom ranking ditebalkan
+    echo "<td class='text-truncate'>{$rank_data['nama']}</td>";
+    echo "<td class='text-truncate'>" . round($rank_data['nilai_akhir'], 3) . "</td>";
+    echo "</tr>";
+
+    $item = [
+        'nama' => $rank_data['nama'],
+        'nilai_akhir' => $nilai_akhir_scaled,
+        'ranking' => $rank,
+    ];
+
+    $alternatif_nilai_akhir_encoded[] = $item;
+    $rank++;
+}
+
+
                     ?>
                         </tbody>
                     </table>
